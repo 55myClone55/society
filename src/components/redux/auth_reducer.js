@@ -1,5 +1,6 @@
 import { stopSubmit } from "redux-form";
 import { authAPI, securityAPI } from "../../API/api";
+import React from 'react'
 const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL_SUCCESS'
 
