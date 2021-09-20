@@ -1,29 +1,36 @@
 import './App.css';
+//@ts-ignore
+import {Svg} from './components/common/svg/Svg'
+import LoginPage from './components/Login/Login'
+import { withSuspense } from './hoc/withSuspense';
+import HeaderContainer from './components/Header/HeaderContainer';
+import UsersContainer from './components/Users/UsersContainer';
+import store from './components/redux/Redux-store';
 import React, { Suspense } from 'react';
 import Navbar from './components/Navbar/Navbar';
-import LoginPage from './components/Login/Login';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
-///import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
-//import ProfileContainer from './components/Profile/ProfileContainer';
-import HeaderContainer from './components/Header/HeaderContainer';
 import { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect,Provider } from 'react-redux';
 import { compose } from 'redux';
 import { initializApp } from './components/redux/app_reducer ';
-import Svg from './components/common/svg/Svg';
-import { Redirect } from 'react-router';
-import { Switch } from 'react-router';
-import { withSuspense } from './hoc/withSuspense';
+import { AppStateType } from './components/redux/Redux-store';
+
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
 //const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 
 
+const SuspendeDialogs = withSuspense(DialogsContainer)
+const SuspendedProfile = withSuspense(ProfileContainer)
+
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispathPropsType = {
+  initializApp: ()=> void
+}
 
 
-class App extends Component {
-  catchAllUnhandlerErrors = (reason,promise) =>{
+class App extends Component<MapPropsType & DispathPropsType> {
+  catchAllUnhandlerErrors = (e:PromiseRejectionEvent) =>{
     alert('Some error occured')
   }
   componentDidMount() {
@@ -45,10 +52,10 @@ class App extends Component {
         <Navbar />
         <div className="app-wrapper-content">
                   <Route path='/dialogs'
-            render={withSuspense(DialogsContainer)} />
+            render={()=><SuspendeDialogs/>} />
           <Route path='/profile/:userId'
-            render={withSuspense(ProfileContainer)} />
-          <Route path='/users' render={() => <UsersContainer />} />
+            render={()=> <SuspendedProfile/> } />
+          <Route path='/users' render={() => <UsersContainer pageTitle={'any'} />} />
           <Route path='/login' render={() => <LoginPage />} />
         
           
@@ -59,7 +66,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized
 })
 export default compose(

@@ -4,13 +4,13 @@ import Svg from '../components/common/svg/Svg';
 
 
 
-export const withSuspense = (Component) => {
+export function withSuspense<WCP>(WrappedComponent:React.ComponentType<WCP>){
     <Suspense fallback={<Svg />}></Suspense>
 
 
-    return (props) => {
+    return (props:WCP) => {
         return <Suspense fallback={<Svg />}>
-            <Component {...props} />
+            <WrappedComponent {...props} />
         </Suspense>
     }
 }
