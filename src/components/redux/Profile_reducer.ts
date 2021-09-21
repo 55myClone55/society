@@ -30,8 +30,8 @@ const profileReducer = (state = initialState, action:ActionType):InitialStateTyp
             };
             return {
                 ...state,
-                posts: [...state.posts, newPost],
-                newPostText: ''
+                posts: [...state.posts, newPost]
+                
             };
         }
         

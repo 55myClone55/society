@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom'
 //import { s } from './Login.module.css'
 import captchaUrl from '../redux/auth_reducer'
 import { AppStateType } from '../redux/Redux-store'
+import {GetStryngKeys} from './../common/FormsControls/FormsControls'
 ///import {createField} from '../common/FormsControls/FormsControls'
 
 
@@ -17,7 +18,9 @@ type LoginFormOwnProps = {
 
 const LoginForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginFormOwnProps> & LoginFormOwnProps> = (props, captchaUrl) => {
     return (
+        //@ts-ignore
         <form onSubmit={props.handleSubmit}>
+            //@ts-ignore
             { createField <LoginFormValuesTypeKeys>('Email','email',[required], Input) }
             { createField <LoginFormValuesTypeKeys>('Password','password',[required], Input,{}) }
             { createField <LoginFormValuesTypeKeys>(undefined,'rememberMe',[], Input, {type:'checkbox'}, 'remember me') }
@@ -54,7 +57,7 @@ export type LoginFormValuesType = {
     email:string
 }
 
-type LoginFormValuesTypeKeys = Extract <keyof LoginFormValuesType,string>
+type LoginFormValuesTypeKeys = GetStryngKeys< LoginFormValuesType>
 
 //@ts-ignore
 const Login:React.FC<MapStatePropsType & MapDispatchPropsType> = (props) => {

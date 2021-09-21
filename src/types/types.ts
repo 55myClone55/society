@@ -20,6 +20,7 @@ export type ProfileType = {
     fullName:string
     contacts:ContactsType
     photos:PhotosType
+    aboutMe:string
 }
 export type PostType = {
     id: number
@@ -31,4 +32,6 @@ export type UserType = {
     name:string
     status:string
     photos:PhotosType
+    followed:boolean
+
 }

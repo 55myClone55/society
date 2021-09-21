@@ -10,10 +10,11 @@ import { Provider } from "react-redux"
 
 //addPost(' ')
 
-
+//@ts-ignore
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store} >
+      //@ts-ignore
       <App />
     </Provider>
   </BrowserRouter>,

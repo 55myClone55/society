@@ -16,6 +16,7 @@ import { initializApp } from './components/redux/app_reducer ';
 import { AppStateType } from './components/redux/Redux-store';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
+//@ts-ignore
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'))
 //const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 

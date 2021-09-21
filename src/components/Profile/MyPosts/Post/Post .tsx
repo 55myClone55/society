@@ -1,7 +1,12 @@
-import React from "react";
+import React, {FC} from "react";
 import s from './Post.module.css';
 
-const Post = (props) => {
+type PropsType = {
+    message:string
+    likesCount: number
+}
+
+const Post:React.FC<PropsType> = (props) => {
 
     console.log(props.message);
 
