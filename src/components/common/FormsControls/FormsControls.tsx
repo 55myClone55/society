@@ -1,9 +1,10 @@
 import React, { FC } from "react";
 import styles from './FormsControls.module.css';
-import { Field, reduxForm, WrappedFieldProps } from "redux-form";
+import { Field, reduxForm, WrappedFieldProps,WrappedFieldMetaProps } from "redux-form";
 import { FieldValidatorType } from "../../../utils/validator/validators";
 //import { FC } from "react";
-import {WrappedFieldMetaProps} from 'redux-form/lib/Field' 
+
+//import {WrappedFieldMetaProps} from 'redux-form/lib/Field' 
 
 
 type FormControlPropsType = {
@@ -12,7 +13,7 @@ type FormControlPropsType = {
 }
 //type FormControlType = (params:FormControlParamstype)=> React.ReactNode
 //@ts-ignore
-function FormControl:React.FC<FormControlPropsType>({ meta: { touched, error }, children }){
+let FormControl :React.FC<FormControlPropsType> = ({ meta: { touched, error }, children }) => {
     const hasError = touched && error
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
@@ -30,7 +31,7 @@ export const Textarea:React.FC<WrappedFieldProps> = (props) => {
     return <FormControl {...props}><textarea {...input} {...restProps} /></FormControl>
 }
 //@ts-ignore
-export function Input:React.FC<WrappedFieldProps>(props){
+export const Input:React.FC<WrappedFieldProps> = (props)=>{
     const { input, meta, ...restProps } = props
     return <FormControl {...props}><input {...input}{...restProps} /></FormControl>
 

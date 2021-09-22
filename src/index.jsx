@@ -1,6 +1,6 @@
 import './index.css';
 import store from './components/redux/Redux-store';
-import React from 'react';
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -11,14 +11,14 @@ import { Provider } from "react-redux"
 //addPost(' ')
 
 //@ts-ignore
-ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={store} >
-      //@ts-ignore
-      <App />
+ReactDOM.render (
+  //@ts-ignore
+   <BrowserRouter>
+      <Provider store={store} >
+           <App/>
     </Provider>
   </BrowserRouter>,
-  document.getElementById('root'));
+    document.getElementById('root'));
 
 
 

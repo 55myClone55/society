@@ -8,7 +8,7 @@ type PropsType = {
        onPageChanged:(pageNumber: number) => void            //(pageNumber: number) => void  /// any | null//
 }
 // @ts-ignore
-let Paginator:FC<PropsType> = ({ 
+let Paginator:FC<PropsType> =  ({ 
     totalUsersCount,
      pageSize, 
      currentPage,
@@ -19,14 +19,16 @@ let Paginator:FC<PropsType> = ({
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
-// @ts-ignore
-//      return <div>
-//                    {pages.map(p => {
-//                                      return <span className=
-//                        { [styles.selectedPage] : currentPage === p } onClick={(e) => { onPageChanged(p) }}>{p}</span>
+ //@ts-ignore
+      return <div>
+             {pages.map((p:any) => {
+                        //@ts-ignore
+              return <span className={ [styles.selectedPage] } 
+                                      //@ts-ignore
+            onClick={(e:any) => { onPageChanged(p) }}>{p}</span>
      
-// })}
-//           </div>
+ })}
+          </div>
          
     
 }

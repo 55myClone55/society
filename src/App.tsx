@@ -1,6 +1,6 @@
 import './App.css';
-//@ts-ignore
-import {Svg} from './components/common/svg/Svg'
+
+import Svg from './components/common/svg/Svg'
 import LoginPage from './components/Login/Login'
 import { withSuspense } from './hoc/withSuspense';
 import HeaderContainer from './components/Header/HeaderContainer';

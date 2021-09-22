@@ -1,6 +1,6 @@
 import React,{FC} from 'react';
 //@ts-ignore
-import {createField} from '../../Login/Login'
+import {createField} from '../../common/FormsControls/FormsControls'
 import { Field, reduxForm } from 'redux-form';
 import { maxLengthCreator, required } from "../../../utils/validator/validators"
 import {InjectedFormProps} from 'redux-form'

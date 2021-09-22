@@ -11,8 +11,8 @@ type PropsType = {
       error:any
 }
 type ProfileTypeKeys = GetStryngKeys<ProfileType>
-
-const ProfileDataForm:React.FC<React.FC<InjectedFormProps<ProfileType,PropsType> & PropsType>> = ({ handleSubmit, profile, error }) => {
+//@ts-ignore
+let ProfileDataForm:React.FC<React.FC<InjectedFormProps<ProfileType,PropsType> & PropsType>> = ({ handleSubmit, profile, error }) => {
     return (<form onSubmit={handleSubmit}>
         <div><button>save</button></div>
         {error && <div>
@@ -45,7 +45,7 @@ const ProfileDataForm:React.FC<React.FC<InjectedFormProps<ProfileType,PropsType>
     </form>
     )
 }
-
+//@ts-ignore
 const ProfileDataFormReduxForm = reduxForm<ProfileType, PropsType>({ form: 'edit-profile' })(ProfileDataForm)
 
 export default ProfileDataFormReduxForm

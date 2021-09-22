@@ -1,6 +1,8 @@
 import { FormAction, stopSubmit } from "redux-form";
 //@ts-ignore
-import { authAPI, RresultCodeEnum, RresultCodeForCaptcha, securityAPI } from "../../API/api";
+import {securityAPI} from "../../API/security-api"
+import {authAPI}from "../../API/auth-api"
+import {  ResultCodeEnum,  RresultCodeForCaptchaEnum } from "../../API/api";
 import React from 'react'
 import {BaseThunkType,InfernActionTypes} from './Redux-store'
 
@@ -41,7 +43,8 @@ export const actions = {
 
 export const getAuthUserData = ():ThunkType => async (dispatch) => {
     let meData = await authAPI.me()
-    if (meData.resultCode === RresultCodeEnum.Success) {
+    if (meData.resultCode === ResultCodeEnum.Success) {
+        //@ts-ignore
         let { id, email, login } = meData.data
         dispatch(actions.setAuthUserData(id, email, login, true))
     }
@@ -49,11 +52,11 @@ export const getAuthUserData = ():ThunkType => async (dispatch) => {
 export const login = (email:string, password:string , rememberMe:boolean,captcha:string ):ThunkType => async (dispatch) => {
 
     let loginData = await authAPI.login(email, password, rememberMe,captcha)
-    if (loginData.resultCode === RresultCodeEnum.Success) {
+    if (loginData.resultCode === ResultCodeEnum.Success) {
         dispatch(getAuthUserData())
     }  
        else{
-        if(loginData.resultCode === RresultCodeForCaptcha.CaptchaIsRequired){
+        if(loginData.resultCode ===  RresultCodeForCaptchaEnum.CaptchaIsRequired){
             dispatch(getCaptchaUrl())
         }
             let message = loginData.messages.length > 0 ?

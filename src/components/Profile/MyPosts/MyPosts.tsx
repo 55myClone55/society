@@ -8,6 +8,7 @@ import { Textarea } from "../../common/FormsControls/FormsControls";
 import {InjectedFormProps } from 'redux-form'
 import {LoginFormValuesType} from './../../Login/Login'
 import { GetStryngKeys } from "../../common/FormsControls/FormsControls";
+import { PostType } from "../../../types/types";
 
 const maxLength10 = maxLengthCreator(10)
 
@@ -30,11 +31,12 @@ const MyPosts:React.FC<MapPropsType & DispatchPropsType> = props => {
     let onAddPost = (values:AddPostFormValuesType) => {
         props.addPost(values.newPostText)
             }
-
+//@ts-ignore
     return (
         <div className={s.postsBlock}>
             <h3>my post</h3>
-            <AddNewPostFormRedux onSubmit={onAddPost} />
+            
+            {/* <AddNewPostFormRedux onSubmit={onAddPost} /> */}
             <div className={s.posts}>
                 {postsElements}
 
@@ -42,7 +44,7 @@ const MyPosts:React.FC<MapPropsType & DispatchPropsType> = props => {
         </div>
 
     )
-})
+}
 //@ts-ignore
 type PropsType = {
 
