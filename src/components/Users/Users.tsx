@@ -1,37 +1,61 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import { UserType } from "../../types/types";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {Formik,Form,Field} from 'formik'
 import { FilterType } from "../redux/users_reducer";
 import {UsersSearchForm} from './UsersSearchForm'
+import { useDispatch, useSelector } from "react-redux";
+import {getTotalUsersCount,getCurrentPage,getPageSize, getUsersFilter,getUsers,getFollowingInProgress} from './../redux/users-selectors'
 
 
 type PropsType = {
-    totalUsersCount:number
-     pageSize:number
-      currentPage:number
-      onPageChanged:(pageNumber: number) => void 
-      onFilterChanged:(filter:FilterType)=>void
-      users: Array<UserType>
-      followingInProgress: Array<number>
-      follow:(userId: number)=> void 
-      unfollow:(userId: number)=> void/// any | null//
+               
 }
 //@ts-ignore
-let Users: FC<PropsType> = ({ currentPage, onPageChanged, totalUsersCount, pageSize, users, ...props })=>{
-    
+export const Users: FC<PropsType> = ( props )=>{
+  
+        const totalUsersCount = useSelector(getTotalUsersCount)
+        const currentPage = useSelector(getCurrentPage)
+        const pageSize = useSelector(getPageSize)
+        const filter = useSelector(getUsersFilter)
+        const users = useSelector(getUsers)
+       const followingInProgress =  useSelector(getFollowingInProgress)
+
+const dispatch = useDispatch()
+
+useEffect(() => {
+    //@ts-ignore
+    dispatch(getUsers(currentPage, pageSize,filter));
+},[])
+
+const onPageChanged = (pageNumber:number) =>{
+    //@ts-ignore
+    dispatch(getUsers(pageNumber, pageSize,filter));
+}
+const unfollow = (userId:number) =>{
+   dispatch(unfollow(userId))
+}
+const follow = (userId:number) =>{
+    dispatch(follow(userId))
+}
+const onFilterChanged = (filter: FilterType) => {
+    //@ts-ignore
+    dispatch(getUsers(1, pageSize, filter));
+     }
+
     return <div>
-         <UsersSearchForm onFilterChanged={props.onFilterChanged}/>
+         <UsersSearchForm onFilterChanged={onFilterChanged}/>
             
           <Paginator currentPage={currentPage} onPageChanged={onPageChanged}
                      totalUsersCount={totalUsersCount} pageSize={pageSize} />
                     <div>
             {
+                //@ts-ignore
                                  users.map(u => <User user={u}
-                                        followingInProgress={props.followingInProgress}
-                                         unfollow={props.unfollow}
-                                        follow={props.follow}
+                                        followingInProgress={followingInProgress}
+                                         unfollow={unfollow}
+                                        follow={follow}
                                         key={u.id} />)
             }
                    </div>
@@ -40,4 +64,3 @@ let Users: FC<PropsType> = ({ currentPage, onPageChanged, totalUsersCount, pageS
     }
 
 
-export default Users;

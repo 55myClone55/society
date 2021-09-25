@@ -11,6 +11,9 @@ export const getUsersPage = createSelector(getUsersPageSelector,
 export const getPageSize = (state:AppStateType) => {
     return state.usersPage.pageSize
 }
+export const getUsers = (state:AppStateType) => {
+    return state.usersPage
+}
 export const getTotalUsersCount = (state:AppStateType) => {
     return state.usersPage.totalUsersCount
 }

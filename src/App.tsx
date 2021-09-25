@@ -1,10 +1,8 @@
 import './App.css';
-
 import Svg from './components/common/svg/Svg'
-import LoginPage from './components/Login/Login'
 import { withSuspense } from './hoc/withSuspense';
 import HeaderContainer from './components/Header/HeaderContainer';
-import UsersContainer from './components/Users/UsersContainer';
+import { UsersPage } from './components/Users/UsersContainer';
 import store from './components/redux/Redux-store';
 import React, { Suspense } from 'react';
 import Navbar from './components/Navbar/Navbar';
@@ -14,6 +12,7 @@ import { connect,Provider } from 'react-redux';
 import { compose } from 'redux';
 import { initializApp } from './components/redux/app_reducer ';
 import { AppStateType } from './components/redux/Redux-store';
+import { Login } from './components/Login/Login';
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 //@ts-ignore
@@ -56,8 +55,8 @@ class App extends Component<MapPropsType & DispathPropsType> {
             render={()=><SuspendeDialogs/>} />
           <Route path='/profile/:userId'
             render={()=> <SuspendedProfile/> } />
-          <Route path='/users' render={() => <UsersContainer pageTitle={'any'} />} />
-          <Route path='/login' render={() => <LoginPage />} />
+          <Route path='/users' render={() => <UsersPage pageTitle={'any'} />} />
+          <Route path='/login' render={() => <Login />} />
         
           
         </div>
