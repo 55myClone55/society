@@ -4,15 +4,17 @@ import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
 import {Formik,Form,Field} from 'formik'
 import { FilterType } from "../redux/users_reducer";
+import { useSelector } from "react-redux";
+import { getUsersFilter } from "../redux/users-selectors";
 
 const usersSearchFormValidade = (values:any) =>{
           const errors = {};
         return errors;
       }
-
+type FriendFormType = 'true' | 'false' | 'null'
       type FormType = {
         term: string
-        friend:'true' | 'false' | 'null'
+        friend:FriendFormType
     }
 
 type PropsType = {
@@ -21,6 +23,8 @@ type PropsType = {
      
 
   export  const UsersSearchForm:React.FC<PropsType> = React.memo((props) =>{
+
+const filter = useSelector(getUsersFilter)
 
 const submit = (values:FormType, { setSubmitting }:{ setSubmitting:(isSubmitting:boolean)=>void }) => {
   const filter:FilterType = {
@@ -34,7 +38,8 @@ const submit = (values:FormType, { setSubmitting }:{ setSubmitting:(isSubmitting
 
         return <div>
 <Formik
-       initialValues={{ term: '',friend:'null' }}
+enableReinitialize
+       initialValues={{ term: filter.term,friend: String(filter.friend) as FriendFormType }}
        validate={usersSearchFormValidade}
        onSubmit={submit}
      >

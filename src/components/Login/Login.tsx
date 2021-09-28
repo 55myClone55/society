@@ -17,7 +17,7 @@ type LoginFormOwnProps = {
 
 const LoginForm:React.FC<InjectedFormProps<LoginFormValuesType,LoginFormOwnProps> & LoginFormOwnProps> = (props, captchaUrl) => {
     return (
-        //@ts-ignore
+      
         <form onSubmit={props.handleSubmit}>
             //@ts-ignore
             { createField <LoginFormValuesTypeKeys>('Email','email',[required], Input) }
@@ -51,20 +51,20 @@ export type LoginFormValuesType = {
 
 type LoginFormValuesTypeKeys = GetStryngKeys< LoginFormValuesType>
 
-//@ts-ignore
+
 export const Login:React.FC = () => {
 
     const captchaUrl = useSelector((state:AppStateType)=>state.auth.captchaUrl)
     const isAuth = useSelector((state:AppStateType)=>state.auth.isAuth)
     const dispatch = useDispatch()
-//@ts-ignore
+
     const onSubmit = (formData:LoginFormValuesType) => {
         dispatch(login(formData.email, formData.password, formData.rememberMe,formData.captcha))
     }
     if (isAuth) {
         return <Redirect to='/profile' />
     }
-    //@ts-ignore
+
     return <div>
                 <h1>login</h1>
                 
