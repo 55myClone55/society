@@ -1,13 +1,9 @@
 import React,{useEffect, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChatMessageType } from '../../API/chat-api';
+import { startMessagesListening,stopMessagesListening,sendMessage } from '../../components/redux/chat_reducer';
+import { AppStateType } from '../../components/redux/Redux-store';
 
-const wsChanel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
-
-export type ChatMessageType = {
-    message: string
-    photo: string
-    userId: number
-    userName: string
-}
 
  const ChatPage:React.FC = () =>{
 return<div>
@@ -17,34 +13,29 @@ return<div>
 
 const Chat:React.FC = () =>{
 
-
+const dispatch = useDispatch()
+   useEffect(() => {
+    dispatch(startMessagesListening())
+    return ()=>{
+        dispatch(stopMessagesListening())
+    }
+   }, [])
 
     return <div>
-        <Messages/>
-        <AddMessageForm/>
+        <Messages />
+        <AddMessageForm />
     </div>
 }
-const Messages:React.FC = () =>{
-    const [messages,setMessages] = useState<ChatMessageType[]>([])
-    useEffect(() => {
-        wsChanel.addEventListener('message',(e: MessageEvent)=>{
-            let newMessages = JSON.parse(e.data)
-            setMessages((prevMessages)=> [...prevMessages,...newMessages])
-        })
-        
-     }, [])
-
+const Messages:React.FC<{ }> = ( {}) =>{
+    const  messages = useSelector((state:AppStateType) => state.chat.messages)
+   
     
     return <div style={{height: '400px', overflowY:'auto'}}>
         {messages.map((m, index) => <Message key={index} message={m}/>)}
        
     </div>
 }
-// {
-//     url: 'https://via.placeholder.com/30',
-//     author: 'Freind',
-//     text: 'Hi mahai'
-// }
+
 const Message:React.FC<{message: ChatMessageType}> = ({message}) =>{
       return <div>
        <img src={message.photo} style={{width:'30px'}}/><b>{message.userName}</b>
@@ -54,13 +45,16 @@ const Message:React.FC<{message: ChatMessageType}> = ({message}) =>{
     </div>
 }
 
-const AddMessageForm:React.FC = () =>{
+const AddMessageForm:React.FC<{ }> = () =>{
 const [message, setMessage] =  useState('')
-const sendMessage = () =>{
+const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
+const dispatch = useDispatch()
+
+const sendMessageHandler = () =>{
     if(!message){
         return
     }
-    wsChanel.send(message)
+    dispatch(sendMessage(message))
     setMessage("")
 }
 
@@ -70,7 +64,7 @@ const sendMessage = () =>{
        <textarea onChange={(e)=> setMessage(e.currentTarget.value)} value={message}></textarea>
        </div>
        <div>
-       <button onClick={sendMessage}>send</button>
+       <button disabled={false} onClick={sendMessageHandler}>send</button>
        </div>
     </div>
 }

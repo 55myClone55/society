@@ -8,6 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import { reducer as formReducer } from 'redux-form'
 import appReduser from "./app_reducer ";
 import { ThunkAction } from 'redux-thunk';
+import chatReduser  from './chat_reducer';
 
 let rootReducers = combineReducers({
     profilePage: profileReducer,
@@ -16,7 +17,8 @@ let rootReducers = combineReducers({
     usersPage: usersReduser,
     auth: authReduser,
     form: formReducer,
-    app: appReduser
+    app: appReduser,
+    chat: chatReduser
 })
 
 //type PropertiesTypes<T> = T extends {[key:string]:infer U} ? U: never
